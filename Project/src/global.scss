@@ -1,0 +1,45 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Stream chat CSS */
+@import "~stream-chat-angular/src/assets/styles/v2/css/index.css";
+
+/* Ionic Calendar CSS */
+@import 'swiper/scss'; 
+
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sass/style.scss";
+// Replace above style with this css file to enable RTL styles
+// @import "./assets/css/style.rtl";
+@import './assets/sass/plugins.scss';
+// @import "./assets/css/style.rtl.css";
+@import "./assets/sass/style.angular.scss";
+
+// Keenicons - High quality and pixel perfect font icons available in 3 styles, duotone, outline and solid for Metronic elements
+@import "./assets/plugins/keenicons/duotone/style.css";
+@import "./assets/plugins/keenicons/outline/style.css";
+@import "./assets/plugins/keenicons/solid/style.css";

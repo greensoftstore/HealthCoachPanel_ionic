@@ -1,0 +1,9 @@
+{
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@ionic/angular/common",
+    "@ionic/angular/standalone"
+  ],
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#B60608"
+  }
+}

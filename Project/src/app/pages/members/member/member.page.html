@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/members"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Member</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+  <ion-segment>
+    <ion-segment-button [routerLink]="['app/members/member/' + memberId + 'summary']" routerDirection="root"  routerLinkActive="active-link">
+      <ion-label>Summary</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [routerLink]="['app/members/member/', memberId, 'profile']" routerDirection="root"  routerLinkActive="active-link">
+      <ion-label>Chat</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-content>
+  
+<ion-router-outlet id="member"></ion-router-outlet>
+
+
+
+

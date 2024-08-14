@@ -1,0 +1,7 @@
+{
+  "name": "coachApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

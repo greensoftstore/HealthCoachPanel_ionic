@@ -1,0 +1,10 @@
+.active-link {
+    --ion-text-color: var(--ion-color-primary);
+    font-weight: bold;
+}
+
+ion-split-pane {
+    --side-width: 300px;
+    --side-max-width: 300px;
+    --border: 1px solid #b3baff;
+}

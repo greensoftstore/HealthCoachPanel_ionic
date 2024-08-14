@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Conversation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <stream-channel>
+    <stream-channel-header>
+      <ion-menu-button></ion-menu-button>
+    </stream-channel-header>
+    <stream-message-list></stream-message-list>
+    <stream-notification-list></stream-notification-list>
+    <stream-message-input></stream-message-input>
+    <stream-thread name="thread">
+      <stream-message-list mode="thread"></stream-message-list>
+      <stream-message-input mode="thread"></stream-message-input>
+    </stream-thread>
+  </stream-channel>
+</ion-content>

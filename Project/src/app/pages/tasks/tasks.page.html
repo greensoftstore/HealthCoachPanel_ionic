@@ -1,0 +1,241 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Tasks
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <div class="card card-custom m-5">
+    <!-- begin::Header -->
+    <div class="card-header card-header-stretch overflow-auto d-flex justify-content-between">
+      <div class="d-flex">
+        <ul class="
+            nav nav-stretch nav-line-tabs nav-line-tabs-2x
+            border-transparent
+            fs-5
+            fw-bolder
+            flex-nowrap
+          ">
+    
+          <li class="nav-item">
+            <a class="nav-link cursor-pointer" [ngClass]="{ 'active me-6 text-active-primary': activeTab === 'ToDo' }"
+              (click)="setActiveTab('ToDo')">
+              To-do
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cursor-pointer" [ngClass]="{ 'active me-6 text-active-primary': activeTab === 'Progress' }"
+              (click)="setActiveTab('Progress')">
+              In Progress
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cursor-pointer" [ngClass]="{ 'active me-6 text-active-primary': activeTab === 'Done' }"
+            (click)="setActiveTab('Done')">
+              Done
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cursor-pointer" [ngClass]="{ 'active me-6 text-active-primary': activeTab === 'All' }"
+            (click)="setActiveTab('All')">
+              All
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="d-flex">
+        <ion-searchbar style="--border-radius: 5px;" class="d-flex" placeholder="Search"></ion-searchbar>
+      </div>
+    </div>
+    <!-- end::Header -->
+    
+    <div class="card-body bg-white">
+      <div class="tab-content pt-3">
+        <div className="dataTables_wrapper dt-bootstrap4 no-footer">
+          <!-- begin::Table container -->
+          <div class="table-responsive">
+            <!-- begin::Table -->
+            <table
+              class="table dataTable table-row-bordered table-row-gray-100 align-middle gs-0 gy-3"
+            >
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted">
+                  <th class="min-w-150px">Title</th>
+                  <th class="min-w-140px">Description</th>
+                  <th class="min-w-120px">Status</th>
+                  <th class="min-w-120px">Deadline</th>
+                  <th class="min-w-120px">Days until deadline</th>
+                  <th class="min-w-100px">Member</th>
+                  <th class="min-w-100px text-end">Make as done</th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody>
+                <tr *ngFor="let item of taskData" (click)="setShowModal(item)">
+                  <td>
+                    <a class="text-dark fw-bolder text-hover-primary fs-6">
+                      {{ item.title }}
+                    </a>
+                  </td>
+                  <td>
+                    <span class="text-muted fw-bold text-muted d-block fs-7">{{ item.description === '' ? '-' : (item.description | slice:0:40) + (item.description.length > 30? '...' : '') }}</span>
+                  </td>
+                  <td>
+                    <span class="badge text-white" [ngClass]="item.status === 0 ? 'badge-danger' : item.status === 1 ? 'badge-warning' : 'badge-success'">
+                      {{ item.status === 0 ? 'To-Do' : item.status === 1 ? 'In Processing' : 'Done' }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="text-muted fw-bold text-muted d-block fs-7">
+                      {{ item.deadline === '' ? '-' : item.deadline }}
+                    </span>
+                  </td>
+                  <td class="text-dark fw-bolder text-hover-primary fs-6">{{ item.until === 0 ? '-' : item.until }}</td>
+                  <td>
+                    <span class="badge badge-secondary">{{ item.member }}</span>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                    >
+                      <a class="btn btn-icon btn-bg-light btn-sm">
+                        <i class="ki-outline ki-check-circle fs-2"></i>
+                      </a>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+            <!-- end::Table -->
+          </div>
+          <!-- end::Table container -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Detail Modal -->
+  <ng-template #modal>
+    <div class="modal-content">
+      <!--begin::Modal header-->
+      <div class="modal-header">
+        <div class="d-flex justify-content-between w-100">
+          <button type="button" class="btn btn-sm btn-outline btn-color-gray-700">
+            <i class="ki-outline ki-check fs-3 ms-1 me-0"></i>{{ selectedData.member }} Complete
+          </button>
+
+          <!--begin::Close-->
+          <div class="d-flex">
+            <div class="btn btn-sm btn-icon btn-active-color-primary">
+              <i class="ki-outline ki-like fs-1"></i>
+            </div>
+            <div class="btn btn-sm btn-icon btn-active-color-primary">
+              <i class="ki-outline ki-paper-clip fs-1"></i>
+            </div>
+            <div class="btn btn-sm btn-icon btn-active-color-primary">
+              <i class="ki-outline ki-data fs-1"></i>
+            </div>
+            <div class="btn btn-sm btn-icon btn-active-color-primary">
+              <i class="ki-outline ki-dots-horizontal fs-1"></i>
+            </div>
+            <div class="btn btn-sm btn-icon btn-active-color-primary" (click)="dismiss()"
+              *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()">
+              <i class="ki-outline ki-cross fs-1"></i>
+            </div>
+          </div>
+          <!--end::Close-->
+        </div>
+      </div>
+      <!--end::Modal header-->
+      <div class="bg-gray-200 px-lg-5 py-lg-3 px-md-5 py-md-3 px-sm-5 py-sm-3 px-xs-5 py-xs-3 d-flex justify-content-between w-100">
+        <div class="d-flex align-items-center">
+          <i class="ki-outline ki-lock fs-1" style="margin-right: 10px;"></i>
+          <span class="text-muted fw-bold text-muted d-block fs-7">This task is private to you.</span>
+        </div>
+        <div>
+          <button type="button" class="btn btn-sm btn-outline btn-color-gray-700">
+            Make Public
+          </button>
+        </div>
+      </div>
+      <!--begin::Modal body-->
+      <div class="modal-body">
+        <!--begin::Stepper-->
+        <div class="py-lg-5 px-lg-5 pb-lg-20">
+          <div class="row mt-3">
+            <h1>Updating trainerize with offshirt branding</h1>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-lg-2">
+              Assignee
+            </div>
+            <div class="col-lg-10 d-flex align-items-center" style="gap: 10px;">
+              <div class="symbol symbol-40px symbol-circle mr-5">
+                <img alt="Pic" src="../../../assets/images/avatar/avatar1.jpg">
+              </div>
+              <span class="text-muted fw-bold text-muted fs-7">{{ selectedData.member }}</span>
+              <i class="ki-outline ki-cross fs-1"></i>
+              <select class="form-select form-select-solid" style="width: 150px;">
+                <option value="0">Today</option>
+                <option value="1">Tomorrow</option>
+                <option value="2">Weekend</option>
+              </select>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-lg-2">
+              Due date
+            </div>
+            <div class="col-lg-10 d-flex align-items-center" style="gap: 10px;">
+              <i class="ki-outline ki-calendar fs-1 p-2" style="border: dotted 2px gray; border-radius: 50%;"></i>
+              <span class="text-muted fw-bold text-muted fs-7">{{ selectedData.deadline == '' ? 'No Due date' : selectedData.deadline }}</span>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-lg-2">
+              Projects
+            </div>
+            <div class="col-lg-10 d-flex align-items-center">
+              <button type="button" class="btn btn-sm btn-outline btn-color-gray-700">
+                Add to Projects
+              </button>
+            </div>
+          </div>
+          <div class="row mt-3 py-lg-3 py-md-3 py-sm-3">
+            <div class="col-lg-2">
+              description
+            </div>
+            <div class="col-lg-10 d-flex justify-content-between">
+              <span class="text-muted fw-bold text-muted fs-7">{{ selectedData.description }}</span>
+            </div>
+          </div>
+          <div class="row mt-3 py-lg-3 py-md-3 py-sm-3">
+            <div class="col-lg-2">
+              What is this task about?
+            </div>
+            <div class="col-lg-10 d-flex align-items-center">
+              <span class="text-muted fw-bold text-muted fs-7">
+                - Identify areas for improvement in your diet, exercise, and lifestyle habits
+                - Create a customized wellness plan to help you achieve your goals
+                - Provide ongoing support and guidance to ensure you stay on track
+                - Offer expert advice on nutrition, stress management, and self-care
+                
+                - Help you overcome obstacles and celebrate your successes
+              </span>
+            </div>
+          </div>
+        </div>
+        <!--end::Stepper-->
+      </div>
+      <!--end::Modal body-->
+    </div>
+  </ng-template>
+  
+</ion-content>
